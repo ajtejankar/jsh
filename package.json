@@ -1,0 +1,23 @@
+{
+  "name": "json-cmd",
+  "version": "1.0.0",
+  "description": "JSON data structure handling on command line",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^3.4.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "JSON",
+    "bash",
+    "cmd"
+  ],
+  "author": "Ajinkya Tejankar",
+  "license": "ISC"
+}
