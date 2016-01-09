@@ -1,6 +1,5 @@
-'use strict';
+import { serialize } from '../lib/serialize';
 
-let serialize = require('../lib/serialize');
 let utils = require('../lib/utils');
 let assert = require('chai').assert;
 
