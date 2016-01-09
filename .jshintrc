@@ -1,0 +1,11 @@
+{
+	"esnext": true,
+	"newcap": true,
+	"latedef": true,
+	"immed": true,
+	"quotmark": "single",
+	"maxlen": 80,
+	"browser": false,
+	"mocha": true,
+	"node": true
+}
