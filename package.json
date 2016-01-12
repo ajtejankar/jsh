@@ -1,5 +1,5 @@
 {
-  "name": "json-cmd",
+  "name": "jsh",
   "version": "1.0.0",
   "description": "JSON data structure handling on command line",
   "main": "./lib",
