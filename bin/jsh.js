@@ -4,7 +4,7 @@
 //TODO: support multiline actions (better script parser)
 //TODO: support empty pattern which executes for all paths
 //TODO: support json pretty printing function
-//TODO: support printf function (does console.log support it?)
+//TODO: support printf function (only simpler versions are supported)
 
 'use strict';
 
