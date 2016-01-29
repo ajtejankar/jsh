@@ -119,7 +119,7 @@ describe('parser', () => {
   it('should handle regex literals in actions', () => {
     let input = `
       **/dep/*.!{html.js} {
-        let regex = /random\\/art\\{bram\\}/g;
+        let regex = /'random\\/"art"\\{bram\\}'/g;
         pf($key);
         pf($val);
       }
@@ -140,8 +140,8 @@ describe('parser', () => {
   it('should handle quote literals literals in actions', () => {
     let input = `
       **/dep/*.!{html.js} {
-        let quote1 = 'random { } art';
-        let quote2 = "random { } art"
+        let quote1 = 'random { } "\` art/';
+        let quote2 = "random { } '\` art"
         let quote3 = \`random { } art\`;
         pf($key);
         pf($val);
