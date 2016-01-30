@@ -1,4 +1,4 @@
-import { parse } from '../lib/parser';
+import parse from '../lib/parser';
 import { assert } from 'chai';
 
 describe('parser', () => {
@@ -104,6 +104,7 @@ describe('parser', () => {
     let output = parse(input);
     let expectedOutput = new Map();
 
+    //https://www.google.co.in/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=random%20art
     expectedOutput.set('**/dep/*.!{html.js}', `{
         /*
           multi line comment

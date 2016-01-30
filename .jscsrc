@@ -1,4 +1,12 @@
 {
 	"preset": "airbnb",
-	"validateLineBreaks": null
+	"validateLineBreaks": null,
+  "maximumLineLength": {
+    "value": 80,
+    "allExcept": ["urlComments", "functionSignature"],
+  },
+  "disallowMultipleVarDecl": {
+    "strict": true,
+    "allExcept": ["undefined"],
+  },
 }

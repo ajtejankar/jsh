@@ -1,7 +1,6 @@
-import { serialize } from '../lib/serialize';
-
-let utils = require('../lib/utils');
-let assert = require('chai').assert;
+import serialize from '../lib/serialize';
+import { isPrimitive } from '../lib/utils';
+import { assert } from 'chai';
 
 describe('serialize', () => {
   it('should handle complex objects', function() {
@@ -29,8 +28,6 @@ describe('serialize', () => {
 
 describe('utils', () => {
   describe('isPrimitive', () => {
-    let isPrimitive = utils.isPrimitive;
-
     it('should handle values allowed in JSON', () => {
       assert.isTrue(isPrimitive(10), 'number');
       assert.isTrue(isPrimitive('some'), 'string');
