@@ -17,10 +17,13 @@ describe('serialize', () => {
       '/number': 1,
       '/boolean': false,
       '/string': 'some',
+      '/array': [1, 2, 3, { random: 'random' }],
       '/array/0': 1,
       '/array/1': 2,
       '/array/2': 3,
+      '/array/3': { random: 'random' },
       '/array/3/random': 'random',
+      '/object': { some: 'some' },
       '/object/some': 'some'
     });
   });
