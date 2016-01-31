@@ -2,7 +2,6 @@
 
 //TODO: support BEGIN and END patterns like awk
 //TODO: support reading input json file name from arguments
-//TODO: support multiline actions (better script parser)
 //TODO: support empty pattern which executes for all paths
 //TODO: support json pretty printing function
 //TODO: support printf function (only simpler versions are supported)
