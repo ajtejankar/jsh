@@ -92,8 +92,8 @@ rules.set(/./, (char, state) => {
 function separate(input) {
   input = input.trim();
   // HACK: for git-bash auto conversion to path bug
-  input = input.replace('C:/Users/ajinkya/AppData/Local/Temp', '/tmp');
-  input = input.replace('C:/Program Files (x86)/Git', '');
+  input = input.replace(/[A-Z]:\/Users\/\w+\/AppData\/Local\/Temp/, '/tmp');
+  input = input.replace(/[A-Z]:\/[^\/]*?\/Git/, '');
   let separateAt = input.match(/\s/);
 
   if (separateAt === null) {
