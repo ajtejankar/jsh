@@ -1,12 +1,6 @@
-'use strict';
+let rules = new Map();
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = parse;
-var rules = new Map();
-
-rules.set(/['"`]/, function (char, state) {
+rules.set(/['"`]/, (char, state) => {
   if (state.name === 'START') {
     state.name = 'QUOTE';
     state.quoteChar = char;
@@ -18,14 +12,14 @@ rules.set(/['"`]/, function (char, state) {
   }
 });
 
-rules.set(/\\/, function (char, state) {
+rules.set(/\\/, (char, state) => {
   if (state.name === 'QUOTE') {
     state.name = 'QUOTE_ESCAPE';
     return true;
   }
 });
 
-rules.set(/\//, function (char, state) {
+rules.set(/\//, (char, state) => {
   if (state.name === 'START') {
     state.name = 'SLASH';
     return true;
@@ -42,7 +36,7 @@ rules.set(/\//, function (char, state) {
   }
 });
 
-rules.set(/\*/, function (char, state) {
+rules.set(/\*/, (char, state) => {
   if (state.name === 'SLASH') {
     state.name = 'COMMENT_ML';
     return true;
@@ -52,14 +46,14 @@ rules.set(/\*/, function (char, state) {
   }
 });
 
-rules.set(/[^\/]/, function (char, state) {
+rules.set(/[^\/]/, (char, state) => {
   if (state.name === 'COMMENT_ML_END1') {
     state.name = 'COMMENT_ML';
     return true;
   }
 });
 
-rules.set(/[^\*\/]/, function (char, state) {
+rules.set(/[^\*\/]/, (char, state) => {
   if (state.name === 'SLASH') {
     state.name = 'QUOTE';
     state.quoteChar = '/';
@@ -67,28 +61,28 @@ rules.set(/[^\*\/]/, function (char, state) {
   }
 });
 
-rules.set(/\n/, function (char, state) {
+rules.set(/\n/, (char, state) => {
   if (state.name === 'COMMENT_SL') {
     state.name = 'START';
     return true;
   }
 });
 
-rules.set(/\{/, function (char, state) {
+rules.set(/\{/, (char, state) => {
   if (state.name === 'START') {
     state.count++;
     return true;
   }
 });
 
-rules.set(/\}/, function (char, state) {
+rules.set(/\}/, (char, state) => {
   if (state.name === 'START') {
     state.count--;
     return true;
   }
 });
 
-rules.set(/./, function (char, state) {
+rules.set(/./, (char, state) => {
   if (state.name === 'QUOTE_ESCAPE') {
     state.name = 'QUOTE';
     return true;
@@ -98,27 +92,24 @@ rules.set(/./, function (char, state) {
 function separate(input) {
   input = input.trim();
   // HACK: for git-bash auto conversion to path bug
-  input = input.replace(/[A-Z]:\/Users\/\w+\/AppData\/Local\/Temp/, '/tmp');
-  input = input.replace(/[A-Z]:\/[^\/]*?\/Git/, '');
-  var separateAt = input.match(/\s/);
+  input = input.replace('C:/Users/ajinkya/AppData/Local/Temp', '/tmp');
+  input = input.replace('C:/Program Files (x86)/Git', '');
+  let separateAt = input.match(/\s/);
 
   if (separateAt === null) {
     throw new Error('Parsing Error');
   }
 
-  var pattern = input.slice(0, separateAt.index);
-  var rest = input.slice(separateAt.index + 1);
+  let pattern = input.slice(0, separateAt.index);
+  let rest = input.slice(separateAt.index + 1);
   rest = rest.trim();
 
   return { pattern: pattern, rest: rest };
 }
 
-function parse(input, output, state) {
-  var sep = separate(input),
-      pattern = sep.pattern,
-      rest = sep.rest;
-  var command = undefined,
-      i = undefined;
+export default function parse(input, output, state) {
+  let sep = separate(input), pattern = sep.pattern, rest = sep.rest;
+  let command, i;
 
   output = output || new Map();
   if (!state) {
@@ -126,31 +117,10 @@ function parse(input, output, state) {
   }
 
   for (i = 0; i < rest.length; i++) {
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = rules.keys()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var rule = _step.value;
-
-        if (rule.test(rest[i])) {
-          if (rules.get(rule)(rest[i], state)) {
-            break;
-          }
-        }
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
+    for (let rule of rules.keys()) {
+      if (rule.test(rest[i])) {
+        if (rules.get(rule)(rest[i], state)) {
+          break;
         }
       }
     }
@@ -160,7 +130,8 @@ function parse(input, output, state) {
     }
   }
 
-  if (state.count === 0 && state.name === 'START' && state.quoteChar === undefined) {
+  if (state.count === 0 &&
+      state.name === 'START' && state.quoteChar === undefined) {
     command = rest.slice(0, i + 1);
     output.set(pattern, command);
 
@@ -171,7 +142,7 @@ function parse(input, output, state) {
       parse(rest, output);
     }
   } else {
-    throw new Error('Parsing Error');
+    throw new Error(`Parsing Error`);
   }
 
   return output;

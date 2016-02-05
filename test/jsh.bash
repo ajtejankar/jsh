@@ -6,6 +6,13 @@ if ! which jsh >/dev/null; then
   npm link
 fi
 
+echo "Compiling javascript"
+
+npm run build
+
+echo ""
+echo "Running tests"
+
 assertEqual() {
   diff="$(diff <(echo "$1") <(echo "$2"))"
 

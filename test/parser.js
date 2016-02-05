@@ -1,4 +1,4 @@
-import parse from '../lib/parser';
+import parse from '../src/parser';
 import { assert } from 'chai';
 
 describe('parser', () => {

@@ -1,5 +1,5 @@
-import serialize from '../lib/serialize';
-import { isPrimitive } from '../lib/utils';
+import serialize from '../src/serialize';
+import { isPrimitive } from '../src/utils';
 import { assert } from 'chai';
 
 describe('serialize', () => {
